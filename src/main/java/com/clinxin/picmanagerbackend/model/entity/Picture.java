@@ -14,6 +14,7 @@ import java.util.Date;
 @TableName(value = "picture")
 @Data
 public class Picture implements Serializable {
+
     /**
      * id
      */
@@ -27,6 +28,7 @@ public class Picture implements Serializable {
 
     /**
      * 缩略图 url
+     * 补充：新增字段
      */
     private String thumbnailUrl;
 

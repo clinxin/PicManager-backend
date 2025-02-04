@@ -60,6 +60,7 @@ public abstract class PictureUploadTemplate {
             PutObjectResult putObjectResult = cosManager.putPictureObject(uploadPath, file);
             // 5. 获取图片信息对象，封装返回结果
             ImageInfo imageInfo = putObjectResult.getCiUploadResult().getOriginalInfo().getImageInfo();
+            /* --- 新增缩略图处理 start --- */
             // 获取到图片处理结果
             ProcessResults processResults = putObjectResult.getCiUploadResult().getProcessResults();
             List<CIObject> objectList = processResults.getObjectList();
@@ -74,6 +75,7 @@ public abstract class PictureUploadTemplate {
                 // 封装压缩图的返回结果
                 return buildResult(originalFilename, compressedCiObject, thumbnailCiObject, imageInfo);
             }
+            /* --- 新增缩略图处理 end --- */
             return buildResult(originalFilename, file, uploadPath, imageInfo);
         } catch (Exception e) {
             log.error("图片上传到对象存储失败", e);
@@ -86,6 +88,7 @@ public abstract class PictureUploadTemplate {
 
     /**
      * 封装返回结果
+     * 新增缩略图返回结果
      *
      * @param originalFilename  原始文件名
      * @param compressdCiObject 压缩后的对象
