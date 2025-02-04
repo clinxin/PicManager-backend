@@ -77,21 +77,25 @@ public class PictureQueryRequest extends PageRequest implements Serializable {
 
     /**
      * 状态：0-待审核; 1-通过; 2-拒绝
+     * 补充：新增字段
      */
     private Integer reviewStatus;
 
     /**
      * 审核信息
+     * 补充：新增字段
      */
     private String reviewMessage;
 
     /**
      * 审核人 id
+     * 补充：新增字段
      */
     private Long reviewerId;
 
     /**
      * 审核时间
+     * 补充：新增字段
      */
     private Date reviewerTime;
 
