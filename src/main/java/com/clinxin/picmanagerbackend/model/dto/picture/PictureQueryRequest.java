@@ -101,11 +101,13 @@ public class PictureQueryRequest extends PageRequest implements Serializable {
 
     /**
      * 空间 id
+     * 补充：新增字段，空间相关
      */
     private Long spaceId;
 
     /**
      * 是否只查询 spaceId 为 null 的数据
+     * 补充：新增字段，空间相关
      */
     private boolean nullSpaceId;
 

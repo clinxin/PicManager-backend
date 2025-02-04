@@ -89,6 +89,7 @@ public class Picture implements Serializable {
 
     /**
      * 空间 id
+     * 补充：新增字段，空间相关
      */
     private Long spaceId;
 
