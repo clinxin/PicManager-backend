@@ -8,14 +8,15 @@ import com.clinxin.picmanagerbackend.model.dto.picture.*;
 import com.clinxin.picmanagerbackend.model.entity.Picture;
 import com.clinxin.picmanagerbackend.model.entity.User;
 import com.clinxin.picmanagerbackend.model.vo.PictureVO;
+import org.springframework.scheduling.annotation.Async;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @author 李鱼皮
+ * @author 48933
  * @description 针对表【picture(图片)】的数据库操作Service
- * @createDate 2024-12-11 20:45:51
+ * @createDate 2024-12-22 15:47:04
  */
 public interface PictureService extends IService<Picture> {
     /**
@@ -91,9 +92,9 @@ public interface PictureService extends IService<Picture> {
 
     /**
      * 清理图片文件
-     *
-     * @param oldPicture
+     * 实现清理的点：1. 删除图片 2. 更新图片 3. 用户注销
      */
+    @Async
     void clearPictureFile(Picture oldPicture);
 
     /**

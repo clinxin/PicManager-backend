@@ -45,6 +45,9 @@ public class SpaceController {
     @Resource
     private SpaceUserAuthManager spaceUserAuthManager;
 
+    /**
+     * 创建空间
+     */
     @PostMapping("/add")
     public BaseResponse<Long> addSpace(@RequestBody SpaceAddRequest spaceAddRequest, HttpServletRequest request) {
         ThrowUtils.throwIf(spaceAddRequest == null, ErrorCode.PARAMS_ERROR);
@@ -53,18 +56,21 @@ public class SpaceController {
         return ResultUtils.success(newId);
     }
 
+    /**
+     * 删除空间
+     */
     @PostMapping("/delete")
-    public BaseResponse<Boolean> deleteSpace(@RequestBody DeleteRequest deleteRequest
-            , HttpServletRequest request) {
+    public BaseResponse<Boolean> deleteSpace(@RequestBody DeleteRequest deleteRequest,
+                                             HttpServletRequest request) {
         if (deleteRequest == null || deleteRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         User loginUser = userService.getLoginUser(request);
-        Long id = deleteRequest.getId();
+        long id = deleteRequest.getId();
         // 判断是否存在
         Space oldSpace = spaceService.getById(id);
         ThrowUtils.throwIf(oldSpace == null, ErrorCode.NOT_FOUND_ERROR);
-        // 仅本人或者管理员可删除
+        // 仅本人或管理员可删除
         spaceService.checkSpaceAuth(loginUser, oldSpace);
         // 操作数据库
         boolean result = spaceService.removeById(id);
@@ -76,13 +82,11 @@ public class SpaceController {
      * 更新空间（仅管理员可用）
      *
      * @param spaceUpdateRequest
-     * @param request
      * @return
      */
     @PostMapping("/update")
     @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Boolean> updateSpace(@RequestBody SpaceUpdateRequest spaceUpdateRequest,
-                                             HttpServletRequest request) {
+    public BaseResponse<Boolean> updateSpace(@RequestBody SpaceUpdateRequest spaceUpdateRequest) {
         if (spaceUpdateRequest == null || spaceUpdateRequest.getId() <= 0) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -197,18 +201,15 @@ public class SpaceController {
 
     /**
      * 获取空间级别列表，便于前端展示
-     *
-     * @return
      */
     @GetMapping("/list/level")
     public BaseResponse<List<SpaceLevel>> listSpaceLevel() {
-        List<SpaceLevel> spaceLevelList = Arrays.stream(SpaceLevelEnum.values())
+        List<SpaceLevel> spaceLevelList = Arrays.stream(SpaceLevelEnum.values()) // 获取所有枚举
                 .map(spaceLevelEnum -> new SpaceLevel(
                         spaceLevelEnum.getValue(),
                         spaceLevelEnum.getText(),
                         spaceLevelEnum.getMaxCount(),
-                        spaceLevelEnum.getMaxSize()
-                ))
+                        spaceLevelEnum.getMaxSize()))
                 .collect(Collectors.toList());
         return ResultUtils.success(spaceLevelList);
     }

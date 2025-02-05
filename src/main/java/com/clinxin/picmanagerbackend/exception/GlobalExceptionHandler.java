@@ -15,12 +15,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    /**
+     * 捕获 Sa-Token 没有登录异常
+     */
     @ExceptionHandler(NotLoginException.class)
     public BaseResponse<?> notLoginException(NotLoginException e) {
         log.error("NotLoginException", e);
         return ResultUtils.error(ErrorCode.NOT_LOGIN_ERROR, e.getMessage());
     }
 
+    /**
+     * 捕获 Sa-Token 没有权限异常
+     */
     @ExceptionHandler(NotPermissionException.class)
     public BaseResponse<?> notPermissionExceptionHandler(NotPermissionException e) {
         log.error("NotPermissionException", e);
@@ -34,7 +40,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public BaseResponse<?> businessExceptionHandler(RuntimeException e) {
+    public BaseResponse<?> runtimeExceptionHandler(RuntimeException e) {
         log.error("RuntimeException", e);
         return ResultUtils.error(ErrorCode.SYSTEM_ERROR, "系统错误");
     }
