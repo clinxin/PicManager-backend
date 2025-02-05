@@ -15,7 +15,6 @@ public class UploadPictureResult {
 
     /**
      * 缩略图 url
-     * 补充：新增字段
      */
     private String thumbnailUrl;
 
@@ -51,7 +50,6 @@ public class UploadPictureResult {
 
     /**
      * 图片主色调
-     * 补充：颜色搜索
      */
     private String picColor;
 

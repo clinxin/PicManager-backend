@@ -28,7 +28,6 @@ public class Picture implements Serializable {
 
     /**
      * 缩略图 url
-     * 补充：新增字段
      */
     private String thumbnailUrl;
 
@@ -79,7 +78,6 @@ public class Picture implements Serializable {
 
     /**
      * 图片主色调
-     * 补充：颜色搜索
      */
     private String picColor;
 
@@ -90,31 +88,26 @@ public class Picture implements Serializable {
 
     /**
      * 空间 id
-     * 补充：新增字段，空间相关
      */
     private Long spaceId;
 
     /**
      * 状态：0-待审核; 1-通过; 2-拒绝
-     * 补充：新增字段
      */
     private Integer reviewStatus;
 
     /**
      * 审核信息
-     * 补充：新增字段
      */
     private String reviewMessage;
 
     /**
      * 审核人 id
-     * 补充：新增字段
      */
     private Long reviewerId;
 
     /**
      * 审核时间
-     * 补充：新增字段
      */
     private Date reviewTime;
 

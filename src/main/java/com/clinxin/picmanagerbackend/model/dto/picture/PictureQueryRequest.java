@@ -77,49 +77,41 @@ public class PictureQueryRequest extends PageRequest implements Serializable {
 
     /**
      * 状态：0-待审核; 1-通过; 2-拒绝
-     * 补充：新增字段
      */
     private Integer reviewStatus;
 
     /**
      * 审核信息
-     * 补充：新增字段
      */
     private String reviewMessage;
 
     /**
      * 审核人 id
-     * 补充：新增字段
      */
     private Long reviewerId;
 
     /**
      * 审核时间
-     * 补充：新增字段
      */
     private Date reviewerTime;
 
     /**
      * 空间 id
-     * 补充：新增字段，空间相关
      */
     private Long spaceId;
 
     /**
      * 是否只查询 spaceId 为 null 的数据
-     * 补充：新增字段，空间相关
      */
     private boolean nullSpaceId;
 
     /**
      * 开始编辑时间
-     * 补充：图片搜索优化
      */
     private Date startEditTime;
 
     /**
      * 结束编辑时间
-     * 补充：图片搜索优化
      */
     private Date endEditTime;
 

@@ -60,7 +60,6 @@ public abstract class PictureUploadTemplate {
             PutObjectResult putObjectResult = cosManager.putPictureObject(uploadPath, file);
             // 5. 获取图片信息对象，封装返回结果
             ImageInfo imageInfo = putObjectResult.getCiUploadResult().getOriginalInfo().getImageInfo();
-            /* --- 新增缩略图处理 start --- */
             // 获取到图片处理结果
             ProcessResults processResults = putObjectResult.getCiUploadResult().getProcessResults();
             List<CIObject> objectList = processResults.getObjectList();
@@ -73,9 +72,8 @@ public abstract class PictureUploadTemplate {
                     thumbnailCiObject = objectList.get(1);
                 }
                 // 封装压缩图的返回结果
-                return buildResult(originalFilename, compressedCiObject, thumbnailCiObject, imageInfo); // imageInfo 图片信息
+                return buildResult(originalFilename, compressedCiObject, thumbnailCiObject, imageInfo);
             }
-            /* --- 新增缩略图处理 end --- */
             return buildResult(originalFilename, file, uploadPath, imageInfo);
         } catch (Exception e) {
             log.error("图片上传到对象存储失败", e);
@@ -88,12 +86,11 @@ public abstract class PictureUploadTemplate {
 
     /**
      * 封装返回结果
-     * 新增缩略图返回结果
      *
      * @param originalFilename  原始文件名
      * @param compressdCiObject 压缩后的对象
      * @param thumbnailCiObject 缩略图对象
-     * @param imageInfo         图片信息（属性、颜色搜索）
+     * @param imageInfo         图片信息
      * @return
      */
     private UploadPictureResult buildResult(String originalFilename, CIObject compressdCiObject,
@@ -111,7 +108,7 @@ public abstract class PictureUploadTemplate {
         uploadPictureResult.setPicHeight(picHeight);
         uploadPictureResult.setPicScale(picScale);
         uploadPictureResult.setPicFormat(compressdCiObject.getFormat());
-        uploadPictureResult.setPicColor(imageInfo.getAve()); // 颜色搜索
+        uploadPictureResult.setPicColor(imageInfo.getAve());
         // 设置缩略图地址
         uploadPictureResult.setThumbnailUrl(cosClientConfig.getHost() + "/" + thumbnailCiObject.getKey());
         // 返回可访问地址
@@ -134,7 +131,7 @@ public abstract class PictureUploadTemplate {
         uploadPictureResult.setPicHeight(picHeight);
         uploadPictureResult.setPicScale(picScale);
         uploadPictureResult.setPicFormat(imageInfo.getFormat());
-        uploadPictureResult.setPicColor(imageInfo.getAve()); // 颜色搜索
+        uploadPictureResult.setPicColor(imageInfo.getAve());
         // 返回可访问地址
         return uploadPictureResult;
     }

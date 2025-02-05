@@ -25,7 +25,6 @@ public class PictureVO implements Serializable {
 
     /**
      * 缩略图 url
-     * 补充：新增字段
      */
     private String thumbnailUrl;
 
@@ -76,7 +75,6 @@ public class PictureVO implements Serializable {
 
     /**
      * 图片主色调
-     * 补充：颜色搜索
      */
     private String picColor;
 
@@ -87,7 +85,6 @@ public class PictureVO implements Serializable {
 
     /**
      * 空间 id
-     * 补充：新增字段，空间相关
      */
     private Long spaceId;
 
@@ -113,7 +110,6 @@ public class PictureVO implements Serializable {
 
     /**
      * 权限列表
-     * 补充：团队空间参数
      */
     private List<String> permissionList = new ArrayList<>();
 
