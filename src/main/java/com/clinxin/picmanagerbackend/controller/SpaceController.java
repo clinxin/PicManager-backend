@@ -9,6 +9,7 @@ import com.clinxin.picmanagerbackend.constant.UserConstant;
 import com.clinxin.picmanagerbackend.exception.BusinessException;
 import com.clinxin.picmanagerbackend.exception.ErrorCode;
 import com.clinxin.picmanagerbackend.exception.ThrowUtils;
+import com.clinxin.picmanagerbackend.manager.auth.SpaceUserAuthManager;
 import com.clinxin.picmanagerbackend.model.dto.space.*;
 import com.clinxin.picmanagerbackend.model.entity.Space;
 import com.clinxin.picmanagerbackend.model.entity.User;
@@ -34,10 +35,15 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/space")
 public class SpaceController {
+
     @Resource
     private UserService userService;
+
     @Resource
     private SpaceService spaceService;
+
+    @Resource
+    private SpaceUserAuthManager spaceUserAuthManager;
 
     @PostMapping("/add")
     public BaseResponse<Long> addSpace(@RequestBody SpaceAddRequest spaceAddRequest, HttpServletRequest request) {
@@ -120,8 +126,12 @@ public class SpaceController {
         // 查询数据库
         Space space = spaceService.getById(id);
         ThrowUtils.throwIf(space == null, ErrorCode.NOT_FOUND_ERROR);
+        SpaceVO spaceVO = spaceService.getSpaceVO(space, request);
+        User loginUser = userService.getLoginUser(request);
+        List<String> permissionList = spaceUserAuthManager.getPermissionList(space, loginUser);
+        spaceVO.setPermissionList(permissionList);
         // 获取封装类
-        return ResultUtils.success(spaceService.getSpaceVO(space, request));
+        return ResultUtils.success(spaceVO);
     }
 
     /**

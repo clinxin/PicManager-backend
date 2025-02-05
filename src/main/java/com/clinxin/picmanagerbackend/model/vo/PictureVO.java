@@ -113,6 +113,7 @@ public class PictureVO implements Serializable {
 
     /**
      * 权限列表
+     * 补充：团队空间参数
      */
     private List<String> permissionList = new ArrayList<>();
 

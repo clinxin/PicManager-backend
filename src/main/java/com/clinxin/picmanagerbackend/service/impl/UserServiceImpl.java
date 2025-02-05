@@ -9,6 +9,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.clinxin.picmanagerbackend.constant.UserConstant;
 import com.clinxin.picmanagerbackend.exception.BusinessException;
 import com.clinxin.picmanagerbackend.exception.ErrorCode;
+import com.clinxin.picmanagerbackend.manager.auth.StpKit;
 import com.clinxin.picmanagerbackend.mapper.UserMapper;
 import com.clinxin.picmanagerbackend.model.dto.user.UserQueryRequest;
 import com.clinxin.picmanagerbackend.model.entity.User;
@@ -107,6 +108,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
         // 4. 插入数据到数据库中
         request.getSession().setAttribute(UserConstant.USER_LOGIN_STATE, user);
+        // 记录用户登录态到 Sa-token，便于空间鉴权时使用，注意保证该用户信息与 SpringSession 中的信息过期时间一致
+        StpKit.SPACE.login(user.getId());
+        StpKit.SPACE.getSession().set(UserConstant.USER_LOGIN_STATE, user);
         return this.getLoginUserVO(user);
     }
 

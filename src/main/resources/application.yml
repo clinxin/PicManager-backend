@@ -30,6 +30,33 @@ spring:
   servlet:
     multipart:
       max-file-size: 10MB
+  # 空间图片分表
+  shardingsphere:
+    datasource:
+      names: pic_manager
+      pic_manager:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/pic_manager
+        username: root
+        password: 123456
+    rules:
+      sharding:
+        tables:
+          picture:
+            actual-data-nodes: pic_manager.picture # 动态分表
+            table-strategy:
+              standard:
+                sharding-column: spaceId
+                sharding-algorithm-name: picture_sharding_algorithm  # 使用自定义分片算法
+        sharding-algorithms:
+          picture_sharding_algorithm:
+            type: CLASS_BASED
+            props:
+              strategy: standard
+              algorithmClassName: com.clinxin.picmanagerbackend.manager.sharding.PictureShardingAlgorithm
+    props:
+      sql-show: true
 # MyBatis 配置
 mybatis-plus:
   configuration:
@@ -38,11 +65,11 @@ mybatis-plus:
     # 仅在开发环境开启日志
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
+    enable-sql-runner: true # 开启 SQL Runner，空间用户功能新增配置
     db-config:
       logic-delete-field: isDelete # 全局逻辑删除的实体字段名，或命名俄日deleted
       logic-delete-value: 1 # 逻辑已删除值（默认为 1）
       logic-not-delete-value: 0 # 逻辑未删除值（默认为 0）
-    enable-sql-runner: true # 开启 SQL Runner
 # 接口文档配置
 knife4j:
   enable: true
