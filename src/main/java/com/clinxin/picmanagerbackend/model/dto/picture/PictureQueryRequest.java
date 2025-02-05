@@ -113,11 +113,13 @@ public class PictureQueryRequest extends PageRequest implements Serializable {
 
     /**
      * 开始编辑时间
+     * 补充：图片搜索优化
      */
     private Date startEditTime;
 
     /**
      * 结束编辑时间
+     * 补充：图片搜索优化
      */
     private Date endEditTime;
 
