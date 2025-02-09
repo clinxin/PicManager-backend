@@ -161,7 +161,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <mainClass>com.clinxin.picmanagerbackend.PicManagerBackendApplication</mainClass>
-                    <skip>true</skip>
+                    <!--<skip>true</skip>-->
                 </configuration>
                 <executions>
                     <execution>
